@@ -6,9 +6,9 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://106.12.156.127:3306/ruoyi-vue-fast?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-        username: ruoyi-vue-fast
-        password: ZBkeFBbjsXdeM5bb
+        url: jdbc:mysql://localhost:3306/ruoyi-vue-fast?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: root
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
