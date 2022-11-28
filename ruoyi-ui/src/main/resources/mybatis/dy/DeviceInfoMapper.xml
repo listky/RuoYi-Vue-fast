@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.dy.mapper.DeviceInfoMapper">
+    
+    <resultMap type="DeviceInfo" id="DeviceInfoResult">
+        <result property="id"    column="id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="deviceIp"    column="device_ip"    />
+        <result property="deviceBrand"    column="device_brand"    />
+        <result property="deviceModel"    column="device_model"    />
+        <result property="deviceRelease"    column="device_release"    />
+        <result property="deviceAndroidId"    column="device_android_id"    />
+        <result property="deviceGroupId"    column="device_group_id"    />
+    </resultMap>
+
+    <sql id="selectDeviceInfoVo">
+        select id, device_name, device_ip, device_brand, device_model, device_release, device_android_id, device_group_id from dy_device_info
+    </sql>
+
+    <select id="selectDeviceInfoList" parameterType="DeviceInfo" resultMap="DeviceInfoResult">
+        <include refid="selectDeviceInfoVo"/>
+        <where>  
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="deviceIp != null  and deviceIp != ''"> and device_ip = #{deviceIp}</if>
+            <if test="deviceBrand != null  and deviceBrand != ''"> and device_brand = #{deviceBrand}</if>
+            <if test="deviceModel != null  and deviceModel != ''"> and device_model = #{deviceModel}</if>
+            <if test="deviceRelease != null  and deviceRelease != ''"> and device_release = #{deviceRelease}</if>
+            <if test="deviceAndroidId != null  and deviceAndroidId != ''"> and device_android_id = #{deviceAndroidId}</if>
+            <if test="deviceGroupId != null  and deviceGroupId != ''"> and device_group_id = #{deviceGroupId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDeviceInfoById" parameterType="Long" resultMap="DeviceInfoResult">
+        <include refid="selectDeviceInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDeviceInfo" parameterType="DeviceInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into dy_device_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceName != null">device_name,</if>
+            <if test="deviceIp != null">device_ip,</if>
+            <if test="deviceBrand != null">device_brand,</if>
+            <if test="deviceModel != null">device_model,</if>
+            <if test="deviceRelease != null">device_release,</if>
+            <if test="deviceAndroidId != null">device_android_id,</if>
+            <if test="deviceGroupId != null and deviceGroupId != ''">device_group_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="deviceIp != null">#{deviceIp},</if>
+            <if test="deviceBrand != null">#{deviceBrand},</if>
+            <if test="deviceModel != null">#{deviceModel},</if>
+            <if test="deviceRelease != null">#{deviceRelease},</if>
+            <if test="deviceAndroidId != null">#{deviceAndroidId},</if>
+            <if test="deviceGroupId != null and deviceGroupId != ''">#{deviceGroupId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDeviceInfo" parameterType="DeviceInfo">
+        update dy_device_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="deviceIp != null">device_ip = #{deviceIp},</if>
+            <if test="deviceBrand != null">device_brand = #{deviceBrand},</if>
+            <if test="deviceModel != null">device_model = #{deviceModel},</if>
+            <if test="deviceRelease != null">device_release = #{deviceRelease},</if>
+            <if test="deviceAndroidId != null">device_android_id = #{deviceAndroidId},</if>
+            <if test="deviceGroupId != null and deviceGroupId != ''">device_group_id = #{deviceGroupId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDeviceInfoById" parameterType="Long">
+        delete from dy_device_info where id = #{id}
+    </delete>
+
+    <delete id="deleteDeviceInfoByIds" parameterType="String">
+        delete from dy_device_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

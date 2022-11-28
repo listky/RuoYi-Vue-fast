@@ -3,6 +3,7 @@ package ${packageName}.domain;
 #foreach ($import in $importList)
 import ${import};
 #end
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -10,6 +11,8 @@ import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 #elseif($table.tree)
 import com.ruoyi.framework.web.domain.TreeEntity;
+import lombok.Data;
+
 #end
 
 /**
@@ -23,7 +26,8 @@ import com.ruoyi.framework.web.domain.TreeEntity;
 #elseif($table.tree)
 #set($Entity="TreeEntity")
 #end
-public class ${ClassName} extends ${Entity}
+@TableName(value ="${tableName}")
+public class ${ClassName}
 {
     private static final long serialVersionUID = 1L;
 
